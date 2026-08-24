@@ -1,0 +1,25 @@
+name: Auto Commit Bot
+
+on:
+  workflow_dispatch: # Yesle tapai lai 'Run workflow' button dincha
+  schedule:
+    - cron: '*/9 * * * *' # Yesle harek 7 minute ma aafai chalauncha
+
+jobs:
+  auto_commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: data File
+        run: |
+          echo "Last updated: $(date)" > data.txt
+          
+      - name: Commit and Push
+        run: |
+          git config --global user.name "Sunil Dhital dev"
+          git config --global user.email "chandrakula341@gmail.com"
+          git add data.txt
+          git commit -m "Automated commit via GitHub Actions"
+          git push
